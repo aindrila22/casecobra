@@ -22,14 +22,14 @@ const Page = () => {
         router.push(`/configure/design?id=${configId}`)
       })
     },
-    onUploadProgress(p:any) {
+    onUploadProgress(p) {
       setUploadProgress(p)
     },
   })
 
   const onDropRejected = (rejectedFiles: FileRejection[]) => {
     const [file] = rejectedFiles
-
+    console.log("reject",file)
     setIsDragOver(false)
 
     toast({
@@ -40,7 +40,8 @@ const Page = () => {
   }
 
   const onDropAccepted = (acceptedFiles: File[]) => {
-    startUpload(acceptedFiles, { configId: undefined })
+    console.log("accept",acceptedFiles)
+    startUpload(acceptedFiles, undefined)
 
     setIsDragOver(false)
   }
