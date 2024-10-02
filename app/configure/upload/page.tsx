@@ -1,3 +1,7 @@
+
+
+
+
 'use client'
 
 import { Progress } from '@/components/ui/progress'
@@ -16,8 +20,9 @@ const Page = () => {
   const router = useRouter()
 
   const { startUpload, isUploading } = useUploadThing('imageUploader', {
-    onClientUploadComplete: ([data]:any) => {
+    onClientUploadComplete: ([data]) => {
       const configId = data.serverData.configId
+      console.log(configId, "configId")
       startTransition(() => {
         router.push(`/configure/design?id=${configId}`)
       })
@@ -29,7 +34,7 @@ const Page = () => {
 
   const onDropRejected = (rejectedFiles: FileRejection[]) => {
     const [file] = rejectedFiles
-    console.log("reject",file)
+
     setIsDragOver(false)
 
     toast({
@@ -40,8 +45,7 @@ const Page = () => {
   }
 
   const onDropAccepted = (acceptedFiles: File[]) => {
-    console.log("accept",acceptedFiles)
-    startUpload(acceptedFiles, undefined)
+    startUpload(acceptedFiles, { configId: undefined })
 
     setIsDragOver(false)
   }
@@ -77,7 +81,7 @@ const Page = () => {
               ) : isUploading || isPending ? (
                 <Loader2 className='animate-spin h-6 w-6 text-zinc-500 mb-2' />
               ) : (
-                <Image className='h-6 w-6 text-zinc-500 mb-2' />
+                <Image className='h-6 w-6 text-zinc-500 mb-2'/>
               )}
               <div className='flex flex-col justify-center mb-2 text-sm text-zinc-700'>
                 {isUploading ? (
