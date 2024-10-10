@@ -34,8 +34,8 @@ console.log(configuration)
       data: {
         id: user.id,
         email: user.email!,
-        //firstName: user.given_name,
-        //lastName: user.family_name,
+        firstName: user.given_name!,
+        lastName: user.family_name!,
         // Add other relevant fields from your user object
       },
     });
@@ -88,7 +88,7 @@ console.log(configuration)
     //payment_method_types: ['card', 'paypal'],
     payment_method_types: ['card'],
     mode: 'payment',
-    shipping_address_collection: { allowed_countries: ['IN', 'US'] },
+    shipping_address_collection: { allowed_countries: ['IN'] },
     metadata: {
       userId: user.id,
       orderId: order.id,
