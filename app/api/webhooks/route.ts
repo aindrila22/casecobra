@@ -78,7 +78,7 @@ export async function POST(req: Request) {
         react: OrderReceivedEmail({
           orderId,
           orderDate: updatedOrder.createdAt.toLocaleDateString(),
-          // @ts-expect-error
+          // @ts-expect-error: This is expected because of type mismatch in legacy data
           shippingAddress: {
             name: session.customer_details!.name!,
             city: shippingAddress!.city!,

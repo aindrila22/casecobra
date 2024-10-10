@@ -31,7 +31,8 @@ const PhonePreview = ({
     window.addEventListener('resize', handleResize)
 
     return () => window.removeEventListener('resize', handleResize)
-  }, [ref.current])
+  //}, [ref.current])
+}, [])
 
   let caseBackgroundColor = 'bg-zinc-950'
   if (color === 'blue') caseBackgroundColor = 'bg-blue-950'
@@ -47,7 +48,7 @@ const PhonePreview = ({
             renderedDimensions.width / (1216 / 121),
           top: renderedDimensions.height / 6.22,
         }}>
-        <img
+        <img alt=''
           width={renderedDimensions.width / (3000 / 637)}
           className={cn(
             'phone-skew relative z-20 rounded-t-[15px] rounded-b-[10px] md:rounded-t-[30px] md:rounded-b-[20px]',
@@ -58,7 +59,7 @@ const PhonePreview = ({
       </div>
 
       <div className='relative h-full w-full z-40'>
-        <img
+        <img 
           alt='phone'
           src='/clearphone.png'
           className='pointer-events-none h-full w-full antialiased rounded-md'

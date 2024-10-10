@@ -16,7 +16,7 @@ const Phone = ({ imgSrc, dark = false, className, ...props }: PhoneProps) => {
       )}
       {...props}
     >
-      <img
+      <img 
         src={
           dark
             ? "/phone-template-dark-edges.png"
