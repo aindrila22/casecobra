@@ -59,6 +59,8 @@ useEffect(() => {
   })
 
   const handleCheckout = () => {
+    createPaymentSession({ configId: id })
+    console.log(user)
     if (user) {
       // create payment session
       createPaymentSession({ configId: id })
