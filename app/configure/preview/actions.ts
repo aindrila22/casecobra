@@ -14,16 +14,31 @@ export const createCheckoutSession = async ({
   const configuration = await db.configuration.findUnique({
     where: { id: configId },
   })
-
+console.log(configuration)
   if (!configuration) {
     throw new Error('No such configuration found')
   }
 
   const { getUser } = getKindeServerSession()
   const user = await getUser()
+  console.log(user)
 
   if (!user) {
     throw new Error('You need to be logged in')
+  }
+ const userInDb = await db.user.findUnique({
+    where: { id: user.id },
+  });
+  if (!userInDb) {
+   await db.user.create({
+      data: {
+        id: user.id,
+        email: user.email!,
+        //firstName: user.given_name,
+        //lastName: user.family_name,
+        // Add other relevant fields from your user object
+      },
+    });
   }
 
   const { finish, material } = configuration
@@ -60,17 +75,20 @@ export const createCheckoutSession = async ({
     name: 'Custom iPhone Case',
     images: [configuration.imageUrl],
     default_price_data: {
-      currency: 'USD',
+      currency: 'INR',
       unit_amount: price,
     },
   })
 
   const stripeSession = await stripe.checkout.sessions.create({
-    success_url: `${process.env.NEXT_PUBLIC_SERVER_URL}/thank-you?orderId=${order.id}`,
-    cancel_url: `${process.env.NEXT_PUBLIC_SERVER_URL}/configure/preview?id=${configuration.id}`,
-    payment_method_types: ['card', 'paypal'],
+    //success_url: `${process.env.NEXT_PUBLIC_SERVER_URL}/thank-you?orderId=${order.id}`,
+    //cancel_url: `${process.env.NEXT_PUBLIC_SERVER_URL}/configure/preview?id=${configuration.id}`,
+    success_url: `http://localhost:3000/thank-you?orderId=${order.id}`,
+    cancel_url: `http://localhost:3000/configure/preview?id=${configuration.id}`,
+    //payment_method_types: ['card', 'paypal'],
+    payment_method_types: ['card'],
     mode: 'payment',
-    shipping_address_collection: { allowed_countries: ['DE', 'US'] },
+    shipping_address_collection: { allowed_countries: ['IN', 'US'] },
     metadata: {
       userId: user.id,
       orderId: order.id,
